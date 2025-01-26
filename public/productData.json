@@ -1,0 +1,138 @@
+[
+  {
+    "product_id": "p101",
+    "product_title": "Gaming Laptop G7",
+    "product_image": "gaming_laptop_g7.jpg",
+    "category": "Computers",
+    "price": 1200,
+    "description": "A powerful gaming laptop for immersive gaming experiences.",
+    "specification": ["16GB RAM", "RTX 3060", "512GB SSD"],
+    "availability": true,
+    "rating": 4.7
+  },
+  {
+    "product_id": "p102",
+    "product_title": "Business Laptop B5",
+    "product_image": "business_laptop_b5.jpg",
+    "category": "Computers",
+    "price": 950,
+    "description": "Lightweight and fast laptop designed for professionals.",
+    "specification": ["8GB RAM", "Intel i7", "256GB SSD"],
+    "availability": true,
+    "rating": 4.5
+  },
+  {
+    "product_id": "p103",
+    "product_title": "Ultrabook Slim X2",
+    "product_image": "ultrabook_slim_x2.jpg",
+    "category": "Computers",
+    "price": 800,
+    "description": "Sleek ultrabook with exceptional performance and portability.",
+    "specification": ["16GB RAM", "Intel i5", "1TB SSD"],
+    "availability": false,
+    "rating": 4.6
+  },
+  {
+    "product_id": "p104",
+    "product_title": "All-in-One Desktop Pro",
+    "product_image": "all_in_one_desktop_pro.jpg",
+    "category": "Computers",
+    "price": 1500,
+    "description": "Premium all-in-one desktop for office and multimedia use.",
+    "specification": ["32GB RAM", "AMD Ryzen 7", "2TB HDD"],
+    "availability": true,
+    "rating": 4.8
+  },
+  {
+    "product_id": "p105",
+    "product_title": "Budget Laptop L1",
+    "product_image": "budget_laptop_l1.jpg",
+    "category": "Computers",
+    "price": 550,
+    "description": "Affordable laptop with basic features for everyday tasks.",
+    "specification": ["4GB RAM", "Intel i3", "128GB SSD"],
+    "availability": true,
+    "rating": 4.2
+  },
+  {
+    "product_id": "p106",
+    "product_title": "High-End Gaming PC",
+    "product_image": "gaming_pc.jpg",
+    "category": "Computers",
+    "price": 2000,
+    "description": "Top-notch gaming PC with unmatched graphics performance.",
+    "specification": ["64GB RAM", "RTX 4090", "2TB SSD"],
+    "availability": true,
+    "rating": 4.9
+  },
+  {
+    "product_id": "p201",
+    "product_title": "Smartphone Max",
+    "product_image": "smartphone_max.jpg",
+    "category": "Phones",
+    "price": 799,
+    "description": "Premium smartphone with outstanding features.",
+    "specification": ["6.7-inch OLED", "128GB Storage", "5G Support"],
+    "availability": true,
+    "rating": 4.8
+  },
+  {
+    "product_id": "p202",
+    "product_title": "Smartphone Lite",
+    "product_image": "smartphone_lite.jpg",
+    "category": "Phones",
+    "price": 499,
+    "description": "Compact and affordable smartphone for everyday use.",
+    "specification": ["6.1-inch LCD", "64GB Storage", "4G Support"],
+    "availability": true,
+    "rating": 4.3
+  },
+  {
+    "product_id": "p301",
+    "product_title": "Smartwatch Pro",
+    "product_image": "smartwatch_pro.jpg",
+    "category": "Smart Watches",
+    "price": 299,
+    "description": "Stylish smartwatch with health tracking features.",
+    "specification": ["AMOLED Display", "Heart Rate Monitor", "GPS"],
+    "availability": true,
+    "rating": 4.6
+  },
+  {
+    "product_id": "p302",
+    "product_title": "Fitness Tracker Band",
+    "product_image": "fitness_tracker_band.jpg",
+    "category": "Smart Watches",
+    "price": 149,
+    "description": "Lightweight fitness tracker with step and calorie tracking.",
+    "specification": ["OLED Display", "Sleep Monitor", "Water Resistant"],
+    "availability": false,
+    "rating": 4.4
+  },
+  {
+    "product_id": "p401",
+    "product_title": "Wireless Charger Pad",
+    "product_image": "wireless_charger.jpg",
+    "category": "Chargers",
+    "price": 59,
+    "description": "Fast wireless charger for multiple devices.",
+    "specification": ["15W Charging", "USB-C Input", "Non-slip Surface"],
+    "availability": true,
+    "rating": 4.3
+  },
+  {
+    "product_id": "p402",
+    "product_title": "Fast Charging Adapter",
+    "product_image": "fast_charging_adapter.jpg",
+    "category": "Chargers",
+    "price": 39,
+    "description": "Compact and efficient fast-charging adapter.",
+    "specification": [
+      "20W Charging",
+      "USB-C and USB-A Ports",
+      "Lightweight Design"
+    ],
+    "availability": true,
+    "rating": 4.5
+  }
+]
