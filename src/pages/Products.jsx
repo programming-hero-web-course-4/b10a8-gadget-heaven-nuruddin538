@@ -19,7 +19,7 @@ const Products = () => {
   return (
     <>
       <div>
-        <div className="bg-[#9538E2] py-24 rounded-md">
+        <div className="bg-[#9538E2] pb-12 md:pb-20 p-4 pt-6 md:pt-8 rounded-md">
           <h1 className="text-lg -mt-2 md:2xl lg:text-3xl font-semibold md:font-bold text-white text-center">
             Must-Have Gadgets and Accessories for Your Electronics
           </h1>
@@ -32,7 +32,7 @@ const Products = () => {
       </div>
       <div className="flex justify-between items-center gap-2">
         <div>
-          <h1 className="text-[black] text-lg md:text-xl">
+          <h1 className="text-[black] text-base md:text-xl">
             Electric accessories&apos;s by Price and Rating
           </h1>
         </div>

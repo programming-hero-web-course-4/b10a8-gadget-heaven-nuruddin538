@@ -32,7 +32,9 @@ const ProductsCard = () => {
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
         {products.length > 0 ? (
-          products.map((product) => <Card key={product.id} product={product} />)
+          products.map((product) => (
+            <Card key={product.product_id} product={product} />
+          ))
         ) : (
           <p className="text-center text-2xl text-gray-500">
             No Products Found.

@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 
 const Card = ({ product }) => {
   console.log(product);
-  const { id, product_image, product_title, price, rating } = product || {};
+  const { product_id, product_image, product_title, price, rating } =
+    product || {};
   return (
     <div>
       <div className="flex relative">
@@ -14,7 +15,7 @@ const Card = ({ product }) => {
             <h1 className="text-xl">{product_title}</h1>
             <p className="text-gray-500 py-2">Price: ${price}</p>
             <p className="text-gray-500 py-1">Rating: {rating}</p>
-            <Link to={`/product/${id}`} className="btn btn-primary">
+            <Link to={`/product/${product_id}`} className="btn btn-primary">
               View Details
             </Link>
           </div>
