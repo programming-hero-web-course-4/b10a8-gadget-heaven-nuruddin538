@@ -54,6 +54,18 @@ const Navber = () => {
                       : "hover:text-blue-800"
                   }`
                 }
+                to="/products"
+              >
+                Products
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex font-bold ${
+                    isActive
+                      ? "items-center text-white bg-gray-600 px-4 py-2 rounded-md"
+                      : "hover:text-blue-800"
+                  }`
+                }
                 to="/statistic"
               >
                 statistic
@@ -94,6 +106,18 @@ const Navber = () => {
               to="/"
             >
               Home
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `flex font-bold ${
+                  isActive
+                    ? "items-center text-white bg-gray-600 px-4 py-2 rounded-md"
+                    : "hover:text-blue-800"
+                }`
+              }
+              to="/products"
+            >
+              Products
             </NavLink>
             <NavLink
               className={({ isActive }) =>
