@@ -1,12 +1,23 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { GiShoppingCart } from "react-icons/gi";
 import { GrFavorite } from "react-icons/gr";
+import { useEffect, useState } from "react";
+import { getLocalStorageData } from "../utilits";
 
 const Navber = () => {
+  const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
+  const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    setCartCount(getLocalStorageData("cart").length);
+    setWishlistCount(getLocalStorageData("wishlist").length);
+  }, []);
+
   const isHomeActive = location.pathname === "/";
   return (
-    <div className="pt-4 px-14 lg:px-24 backdrop-blur-xl bg-white/20 z-50 w-full fixed">
+    <div className="pt-4 px-8 md:px-12 lg:px-24 backdrop-blur-xl bg-white/20 z-50 w-full fixed">
       <div
         className={`navbar ${
           isHomeActive ? "rounded-t-md bg-[#9538E2] px-4" : ""
@@ -147,15 +158,23 @@ const Navber = () => {
         </div>
         <div className="navbar-end">
           <div className="flex justify-center items-center space-x-4">
-            <div className="border border-gray-300 rounded-full bg-white p-2">
-              <Link>
+            <div className="">
+              <span>{cartCount}</span>
+              <div
+                onClick={() => navigate("/dashboard?tab=cart")}
+                className="border border-gray-300 rounded-full bg-white p-2 cursor-pointer"
+              >
                 <GiShoppingCart size={14} />
-              </Link>
+              </div>
             </div>
             <div className="border border-gray-300 rounded-full bg-white p-2">
-              <Link>
+              <div
+                onClick={() => navigate("/dashboard?tab=wishlist")}
+                className="cursor-pointer"
+              >
                 <GrFavorite size={14} />
-              </Link>
+                <span>{wishlistCount}</span>
+              </div>
             </div>
           </div>
         </div>
