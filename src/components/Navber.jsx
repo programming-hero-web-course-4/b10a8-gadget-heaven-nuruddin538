@@ -10,12 +10,31 @@ const Navber = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
+  // Function to update counts without page refresh
+  const updateCounts = () => {
     setCartCount(getLocalStorageData("cart").length);
     setWishlistCount(getLocalStorageData("wishlist").length);
+  };
+
+  useEffect(() => {
+    updateCounts();
+
+    // Listen to storage events to update counts dynamically
+    const handleCustomStorageUpdate = () => updateCounts();
+    window.addEventListener("storageUpdate", handleCustomStorageUpdate);
+
+    return () => {
+      window.removeEventListener("storageUpdate", handleCustomStorageUpdate);
+    };
   }, []);
 
   const isHomeActive = location.pathname === "/";
+
+  // Dynamic badge style based on route
+  const badgeBg = isHomeActive
+    ? "bg-white text-[#9538E2]"
+    : "bg-[#9538E2] text-white";
+
   return (
     <div className="pt-4 px-8 md:px-12 lg:px-24 backdrop-blur-xl bg-white/20 z-50 w-full fixed">
       <div
@@ -158,8 +177,14 @@ const Navber = () => {
         </div>
         <div className="navbar-end">
           <div className="flex justify-center items-center space-x-4">
-            <div className="">
-              <span>{cartCount}</span>
+            <div className="relative">
+              {cartCount > 0 && (
+                <span
+                  className={`absolute -top-2 -right-3 ${badgeBg} border border-[#9538E2] text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full`}
+                >
+                  {cartCount}
+                </span>
+              )}
               <div
                 onClick={() => navigate("/dashboard?tab=cart")}
                 className="border border-gray-300 rounded-full bg-white p-2 cursor-pointer"
@@ -168,12 +193,20 @@ const Navber = () => {
               </div>
             </div>
             <div className="border border-gray-300 rounded-full bg-white p-2">
+              <div className="relative">
+                {wishlistCount > 0 && (
+                  <span
+                    className={`absolute -top-4 -right-5 ${badgeBg} border-[#9538E2] text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full`}
+                  >
+                    {wishlistCount}
+                  </span>
+                )}
+              </div>
               <div
                 onClick={() => navigate("/dashboard?tab=wishlist")}
                 className="cursor-pointer"
               >
                 <GrFavorite size={14} />
-                <span>{wishlistCount}</span>
               </div>
             </div>
           </div>

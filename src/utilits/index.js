@@ -9,10 +9,12 @@ export const setLocalStorageData = (key, value) => {
 
 export const addToStorage = (key, item) => {
   const existingData = getLocalStorageData(key);
-  if (existingData.find((data) => data.id === item.id)) {
+  if (existingData.find((data) => data.product_id === item.product_id)) {
     return false;
   }
   existingData.push(item);
   setLocalStorageData(key, existingData);
+  // Dispatch event to update navbar count
+  window.dispatchEvent(new Event("storageUpdate"));
   return true;
 };

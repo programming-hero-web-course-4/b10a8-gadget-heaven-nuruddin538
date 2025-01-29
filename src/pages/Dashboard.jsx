@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { getLocalStorageData } from "../utilits";
+import { useSearchParams } from "react-router-dom";
 
 const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState("cart");
+  const [searchParams] = useSearchParams();
+  const defaultTab = searchParams.get("tab") || "cart";
+
+  const [activeTab, setActiveTab] = useState(defaultTab);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -16,7 +20,6 @@ const Dashboard = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-  const price = 0;
 
   return (
     <>
@@ -59,7 +62,7 @@ const Dashboard = () => {
           </h3>
         </div>
         {activeTab === "cart" && (
-          <div className="flex justify-center space-x-4">
+          <div className="md:flex justify-center space-y-5 md:space-x-4">
             <h3 className="text-black text-lg font-semibold mt-2">
               Total Cost: $
               {data.reduce((total, item) => total + parseFloat(item.price), 0)}
@@ -91,10 +94,10 @@ const Dashboard = () => {
         {data.map((item) => (
           <div
             key={item.id}
-            className="flex bg-white rounded-md p-6 space-x-4 items-center item-card"
+            className="md:flex bg-white rounded-md p-6 space-x-4 md:space-x-8 items-center item-card mb-2"
           >
             <img
-              className="w-40 h-auto rounded-md"
+              className="w-40 h-20 md:w-30 md:h-30 rounded-md"
               src={item.product_image}
               alt={item.product_tilte}
             />
