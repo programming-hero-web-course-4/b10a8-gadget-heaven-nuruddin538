@@ -30,7 +30,7 @@ const Products = () => {
           </p>
         </div>
       </div>
-      <div className="flex justify-between items-center gap-2">
+      <div className="md:flex justify-between items-center gap-2">
         <div>
           <h1 className="text-[black] text-base md:text-xl">
             Electric accessories&apos;s by Price and Rating

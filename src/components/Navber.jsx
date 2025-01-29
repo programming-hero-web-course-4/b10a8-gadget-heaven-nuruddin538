@@ -12,8 +12,8 @@ const Navber = () => {
 
   // Function to update counts without page refresh
   const updateCounts = () => {
-    setCartCount(getLocalStorageData("cart").length);
-    setWishlistCount(getLocalStorageData("wishlist").length);
+    setCartCount(getLocalStorageData("cart")?.length || 0);
+    setWishlistCount(getLocalStorageData("wishlist")?.length || 0);
   };
 
   useEffect(() => {
@@ -21,10 +21,13 @@ const Navber = () => {
 
     // Listen to storage events to update counts dynamically
     const handleCustomStorageUpdate = () => updateCounts();
-    window.addEventListener("storageUpdate", handleCustomStorageUpdate);
+    document.addEventListener("updateNavbarCounts", handleCustomStorageUpdate);
 
     return () => {
-      window.removeEventListener("storageUpdate", handleCustomStorageUpdate);
+      document.removeEventListener(
+        "updateNavbarCounts",
+        handleCustomStorageUpdate
+      );
     };
   }, []);
 

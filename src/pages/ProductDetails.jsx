@@ -23,16 +23,20 @@ const ProductDetails = () => {
   const handleAddToCart = () => {
     if (addToStorage("cart", product)) {
       toast.success("Added to Cart!");
+      document.dispatchEvent(new Event("updateNavbarCounts"));
     } else {
       toast.error("Already exists in Cart!");
+      document.dispatchEvent(new Event("updateNavbarCounts"));
     }
   };
 
   const handleAddToWishlist = () => {
     if (addToStorage("wishlist", product)) {
       toast.success("Added to Wishlist!");
+      document.dispatchEvent(new Event("updateNavbarCounts"));
     } else {
       toast.error("Already exists in Wishlist!");
+      document.dispatchEvent(new Event("updateNavbarCounts"));
     }
   };
 

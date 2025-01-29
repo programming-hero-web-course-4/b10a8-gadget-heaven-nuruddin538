@@ -1,24 +1,64 @@
 import { useEffect, useState } from "react";
-import { getLocalStorageData } from "../utilits";
+import { getLocalStorageData, setLocalStorageData } from "../utilits";
 import { useSearchParams } from "react-router-dom";
+import { RxCross2 } from "react-icons/rx";
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const defaultTab = searchParams.get("tab") || "cart";
 
   const [activeTab, setActiveTab] = useState(defaultTab);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (activeTab === "cart") {
-      setData(getLocalStorageData("cart"));
-    } else {
-      setData(getLocalStorageData("wishlist"));
-    }
+    setData(getLocalStorageData(activeTab));
+    // if (activeTab === "cart") {
+    //   setData(getLocalStorageData("cart"));
+    // } else {
+    //   setData(getLocalStorageData("wishlist"));
+    // }
   }, [activeTab]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    setSearchParams({ tab });
+    toast.success(`Switched to ${tab}`);
+  };
+
+  // Delete item from localStorage
+  const handleDeleteItem = (id) => {
+    const updatedData = data.filter((item) => item.product_id !== id);
+    setData(updatedData);
+    setLocalStorageData(activeTab, updatedData);
+    toast.error("Item removed!");
+
+    // Trigger navbar update
+    document.dispatchEvent(new Event("updateNavbarCounts"));
+  };
+
+  // Move item from WishList to Cart
+  const handleAddToCart = (item) => {
+    const cartItems = getLocalStorageData("cart") || [];
+    const itemExists = cartItems.some(
+      (cartItems) => cartItems.product_id === item.product_id
+    );
+
+    if (!itemExists) {
+      const updatedCart = [...cartItems, item];
+      setLocalStorageData("cart", updatedCart);
+      toast.success("Added to cart!");
+
+      // Remove from wishlist after adding to cart
+      if (activeTab === "wishlist") {
+        handleDeleteItem(item.product_id);
+      }
+    } else {
+      toast.error("Item already in cart!");
+      document.dispatchEvent(new Event("updateNavbarCounts"));
+    }
+    // Trigger navbar update
+    document.dispatchEvent(new Event("updateNavbarCounts"));
   };
 
   return (
@@ -91,23 +131,43 @@ const Dashboard = () => {
         )}
       </div>
       <div className="py-12">
-        {data.map((item) => (
-          <div
-            key={item.id}
-            className="md:flex bg-white rounded-md p-6 space-x-4 md:space-x-8 items-center item-card mb-2"
-          >
-            <img
-              className="w-40 h-20 md:w-30 md:h-30 rounded-md"
-              src={item.product_image}
-              alt={item.product_tilte}
-            />
-            <div>
-              <p>{item.product_title}</p>
-              <p className="text-gray-500 my-2">Price: ${item.price}</p>
-              <p className="text-gray-400">{item.description}</p>
+        {data.length === 0 ? (
+          <p className="text-center text-gray-500">
+            No items found in {activeTab}.
+          </p>
+        ) : (
+          data.map((item) => (
+            <div
+              key={item.id}
+              className="relative md:flex bg-white rounded-md p-6 space-x-4 md:space-x-8 items-center item-card mb-2"
+            >
+              <img
+                className="w-40 h-20 md:w-30 md:h-30 rounded-md"
+                src={item.product_image}
+                alt={item.product_tilte}
+              />
+              <div className="flex-1">
+                <p className="text-lg font-semibold">{item.product_title}</p>
+                <p className="text-gray-500 my-2">Price: ${item.price}</p>
+                <p className="text-gray-400">{item.description}</p>
+                {activeTab === "wishlist" && (
+                  <button
+                    onClick={() => handleAddToCart(item)}
+                    className="mt-2 px-4 py-2 bg-[#9538E2] text-white rounded-full cursor-pointer"
+                  >
+                    Add to Cart
+                  </button>
+                )}
+                <button
+                  onClick={() => handleDeleteItem(item.product_id)}
+                  className="absolute top-2 md:top-4 p-1 border border-red-400 rounded-full cursor-pointer right-3 md:right-4 text-red-500 text-xl"
+                >
+                  <RxCross2 size={16} />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </>
   );

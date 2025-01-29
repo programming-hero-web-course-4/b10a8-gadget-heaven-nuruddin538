@@ -8,7 +8,7 @@ const Card = ({ product }) => {
     <div>
       <div className="flex relative">
         <div className="transition hover:scale-105 shadow-xl rounded-xl overflow-hidden">
-          <figure className="w-full h-48 overflow-hidden">
+          <figure className="w-full h-32 md:h-48 overflow-hidden">
             <img className="text-xl" src={product_image} alt="" />
           </figure>
           <div className="p-4">
