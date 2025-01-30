@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { getLocalStorageData, setLocalStorageData } from "../utilits";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import toast from "react-hot-toast";
+import GroupImg from "../assets/Group.png";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const defaultTab = searchParams.get("tab") || "cart";
 
   const [activeTab, setActiveTab] = useState(defaultTab);
   const [data, setData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setData(getLocalStorageData(activeTab));
@@ -23,7 +26,7 @@ const Dashboard = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     setSearchParams({ tab });
-    toast.success(`Switched to ${tab}`);
+    // toast.success(`Switched to ${tab}`);
   };
 
   // Delete item from localStorage
@@ -59,6 +62,33 @@ const Dashboard = () => {
     }
     // Trigger navbar update
     document.dispatchEvent(new Event("updateNavbarCounts"));
+  };
+
+  // Sort items by price
+  const handleSortByPrice = () => {
+    const sortedData = [...data].sort(
+      (a, b) => parseFloat(a.price) - parseFloat(b.price)
+    );
+    setData(sortedData);
+  };
+
+  // Purchase confirmation -Opens Modal
+  const handlePurchase = () => {
+    if (data.length === 0) {
+      toast.error("No items in cart to purchase!");
+      return;
+    }
+    setShowModal(true);
+  };
+
+  // Close modal and clear cart
+  const handleCloseModel = () => {
+    setShowModal(false);
+    setData([]);
+    setLocalStorageData("cart", []);
+    document.dispatchEvent(new Event("updateNavbarCounts"));
+    // Redirect to home page
+    navigate("/");
   };
 
   return (
@@ -108,7 +138,7 @@ const Dashboard = () => {
               {data.reduce((total, item) => total + parseFloat(item.price), 0)}
             </h3>
             <button
-              onClick={() => handleTabClick("cart")}
+              onClick={handleSortByPrice}
               className={`btn rounded-full px-8 py-2 ${
                 activeTab === "cart"
                   ? "bg-white text-[#9538E2]"
@@ -118,7 +148,7 @@ const Dashboard = () => {
               Sort by price
             </button>
             <button
-              onClick={() => handleTabClick("wishlist")}
+              onClick={handlePurchase}
               className={`btn rounded-full px-8 py-2 ${
                 activeTab === "wishlist"
                   ? "bg-white text-[#9538E2]"
@@ -169,6 +199,26 @@ const Dashboard = () => {
           ))
         )}
       </div>
+      {/* success Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-12 rounded-lg shadow-lg text-center">
+            <div className="flex justify-center items-center mb-2">
+              <img src={GroupImg} alt="GroupImg" />
+            </div>
+            <h2 className="text-2xl font-bold text-green-600">
+              Purchase Successful!
+            </h2>
+            <p>Thank you for your purchase</p>
+            <button
+              onClick={handleCloseModel}
+              className="mt-4 px-6 py-2 bg-[#9538e2] text-white rounded-md"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
