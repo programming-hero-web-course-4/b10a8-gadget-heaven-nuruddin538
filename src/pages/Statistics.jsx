@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import {
   ResponsiveContainer,
   XAxis,
@@ -27,6 +28,13 @@ const productData = [
 const Statistics = () => {
   return (
     <>
+      <Helmet>
+        <title>Statistic - Gadget Heaven</title>
+        <meta
+          name="description"
+          content="View detailed statistics about product sales and trends."
+        />
+      </Helmet>
       <div className="w-full bg-[#9538E2] pb-12 md:pb-20 p-4 pt-6 md:pt-8 rounded-md">
         <h1 className="text-lg -mt-2 md:2xl lg:text-3xl font-semibold md:font-bold text-white text-center">
           Statistics

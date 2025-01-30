@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Card from "../components/Card";
+import { Helmet } from "react-helmet-async";
 
 const Products = () => {
   const data = useLoaderData();
@@ -19,6 +20,13 @@ const Products = () => {
   return (
     <>
       <div className="">
+        <Helmet>
+          <title>Products - Gadget Heaven</title>
+          <meta
+            name="description"
+            content="Browse our wide selection of technology gadgets."
+          />
+        </Helmet>
         <div className="w-full bg-[#9538E2] pb-12 md:pb-20 p-4 pt-6 md:pt-8 rounded-md">
           <h1 className="text-lg -mt-2 md:2xl lg:text-3xl font-semibold md:font-bold text-white text-center">
             Must-Have Gadgets and Accessories for Your Electronics

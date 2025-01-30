@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import toast from "react-hot-toast";
 import GroupImg from "../assets/Group.png";
+import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -34,7 +35,11 @@ const Dashboard = () => {
     const updatedData = data.filter((item) => item.product_id !== id);
     setData(updatedData);
     setLocalStorageData(activeTab, updatedData);
-    toast.error("Item removed!");
+    if (activeTab === "cart") {
+      toast.success("Item removed! Cart updated");
+    } else {
+      toast.success("Item removed from wishlsit!");
+    }
 
     // Trigger navbar update
     document.dispatchEvent(new Event("updateNavbarCounts"));
@@ -43,31 +48,51 @@ const Dashboard = () => {
   // Move item from WishList to Cart
   const handleAddToCart = (item) => {
     const cartItems = getLocalStorageData("cart") || [];
+    const totalCartValue = cartItems.reduce(
+      (total, item) => total + parseFloat(item.price),
+      0
+    );
+
+    if (totalCartValue + parseFloat(item.price) > 3000) {
+      toast.error("Cart total exceeds $3000.");
+      return;
+    }
     const itemExists = cartItems.some(
-      (cartItems) => cartItems.product_id === item.product_id
+      (cartItem) => cartItem.product_id === item.product_id
     );
 
     if (!itemExists) {
       const updatedCart = [...cartItems, item];
       setLocalStorageData("cart", updatedCart);
       toast.success("Added to cart!");
-
-      // Remove from wishlist after adding to cart
       if (activeTab === "wishlist") {
         handleDeleteItem(item.product_id);
       }
     } else {
       toast.error("Item already in cart!");
-      document.dispatchEvent(new Event("updateNavbarCounts"));
     }
-    // Trigger navbar update
     document.dispatchEvent(new Event("updateNavbarCounts"));
+
+    // const cartItems = getLocalStorageData("cart") || [];
+    // if (
+    //   cartItems.some((cartItems) => cartItems.product_id === item.product_id)
+    // ) {
+    //   const updatedCart = [...cartItems, item];
+    //   setLocalStorageData("cart", updatedCart);
+    //   toast.success("Added to cart!");
+    //   if (activeTab === "wishlist") handleDeleteItem(item.product_id);
+    // } else {
+    //   toast.error("Item already in cart!");
+    // }
+    // document.dispatchEvent(new Event("updateNavbarCounts"));
+    // // Trigger navbar update
+    // document.dispatchEvent(new Event("updateNavbarCounts"));
   };
 
   // Sort items by price
   const handleSortByPrice = () => {
     const sortedData = [...data].sort(
-      (a, b) => parseFloat(a.price) - parseFloat(b.price)
+      (a, b) => parseFloat(b.price) - parseFloat(a.price)
     );
     setData(sortedData);
   };
@@ -93,6 +118,13 @@ const Dashboard = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Dashboard - Gadget Heaven</title>
+        <meta
+          name="description"
+          content="Manage your shopping cart and wishlist."
+        />
+      </Helmet>
       <div className="bg-[#9538E2] pb-6 md:pb-8 p-4 pt-6 md:pt-8 rounded-md">
         <h1 className="text-lg -mt-2 md:2xl lg:text-3xl font-semibold md:font-bold text-white text-center">
           Dashboard
@@ -139,19 +171,16 @@ const Dashboard = () => {
             </h3>
             <button
               onClick={handleSortByPrice}
-              className={`btn rounded-full px-8 py-2 ${
-                activeTab === "cart"
-                  ? "bg-white text-[#9538E2]"
-                  : "bg-[#9538E2] text-white"
-              }`}
+              className="btn rounded-full px-8 py-2 bg-[#9538E2] text-white"
             >
               Sort by price
             </button>
             <button
               onClick={handlePurchase}
+              disabled={data.length === 0}
               className={`btn rounded-full px-8 py-2 ${
-                activeTab === "wishlist"
-                  ? "bg-white text-[#9538E2]"
+                data.length === 0
+                  ? "bg-gray-400 cursor-not-allowed"
                   : "bg-[#9538E2] text-white"
               }`}
             >

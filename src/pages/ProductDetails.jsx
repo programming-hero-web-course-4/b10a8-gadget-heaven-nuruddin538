@@ -5,10 +5,16 @@ import { IoStarSharp } from "react-icons/io5";
 import { IoStarHalf } from "react-icons/io5";
 import { MdAddShoppingCart } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
-import { addToStorage } from "../utilits";
+import { addToStorage, getLocalStorageData } from "../utilits";
 import toast from "react-hot-toast";
 
+const MAX_CART_TOTAL = 3000;
+
 const ProductDetails = () => {
+  const [cart, setCart] = useState(getLocalStorageData("cart") || []);
+  const [wishlist, setWishlist] = useState(
+    getLocalStorageData("wishlist") || []
+  );
   const data = useLoaderData();
   // console.log(data);
   const { product_id } = useParams();
@@ -20,19 +26,32 @@ const ProductDetails = () => {
     setProduct(singleData);
   }, [data, product_id]);
 
+  // Calculate total cart price
+  const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
+
   const handleAddToCart = () => {
+    if (cartTotal + product.price > MAX_CART_TOTAL) {
+      toast.error("Cart total cannot exceed $1000!");
+      return;
+    }
+
     if (addToStorage("cart", product)) {
       toast.success("Added to Cart!");
+      setCart([...cart, product]);
       document.dispatchEvent(new Event("updateNavbarCounts"));
     } else {
       toast.error("Already exists in Cart!");
-      document.dispatchEvent(new Event("updateNavbarCounts"));
     }
   };
+
+  useEffect(() => {
+    setWishlist(getLocalStorageData("wishlist") || []);
+  }, []);
 
   const handleAddToWishlist = () => {
     if (addToStorage("wishlist", product)) {
       toast.success("Added to Wishlist!");
+      setWishlist([...wishlist, product]);
       document.dispatchEvent(new Event("updateNavbarCounts"));
     } else {
       toast.error("Already exists in Wishlist!");
@@ -126,8 +145,20 @@ const ProductDetails = () => {
                 Add to Card <MdAddShoppingCart size={16} />
               </button>
               <div
-                onClick={handleAddToWishlist}
-                className="border cursor-pointer border-gray-200 p-1 md:p-2 rounded-full"
+                onClick={
+                  wishlist.some(
+                    (item) => item.product_id === product.product_id
+                  )
+                    ? null
+                    : handleAddToWishlist
+                }
+                className={`border cursor-pointer border-gray-200 p-1 md:p-2 rounded-full ${
+                  wishlist.some(
+                    (item) => item.product_id === product.product_id
+                  )
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
+                }`}
               >
                 <CiHeart size={18} />
               </div>

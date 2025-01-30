@@ -3,11 +3,19 @@ import BannerCard from "../components/BannerCard";
 import Categories from "../components/Categories";
 import Heading from "../components/Heading";
 import HomeBanner from "../components/HomeBanner";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   const categories = useLoaderData();
   return (
     <div className="">
+      <Helmet>
+        <title>Home - Gadget Heaven</title>
+        <meta
+          name="description"
+          content="Explore the latest cutting-edge gadgets and accessories."
+        />
+      </Helmet>
       {/* Banner */}
       <HomeBanner />
       {/* Banner Card */}

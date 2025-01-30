@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import BannerTitle from "./BannerTitle";
 
 const HomeBanner = () => {
@@ -14,9 +15,12 @@ const HomeBanner = () => {
                 "Explore the latest gadgets that will take your experience to the next level. From smart devices to <br> the coolest accessories, we have it all!"
               }
             />
-            <button className="btn btn-white rounded-full text-[#9538E2]">
+            <Link
+              to="/dashboard"
+              className="btn btn-white rounded-full text-[#9538E2]"
+            >
               Shop Now
-            </button>
+            </Link>
           </div>
         </div>
       </div>
