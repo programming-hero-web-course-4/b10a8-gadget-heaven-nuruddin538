@@ -1,18 +1,35 @@
-# React + Vite
+### Ecommerce Gadget Heaven
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+\*Githut Link: https://github.com/programming-hero-web-course-4/b10a8-gadget-heaven-nuruddin538
 
-Currently, two official plugins are available:
+\*Live Link: https://silly-syrniki-d0e49e.netlify.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Technologies Used
 
-### Navbar Section
+*React.js
+*React Router
+*React Helmet(for dynamic titles)
+*Local Storage(for cart & wishlsit presistence)
+*Tailwind CSS(for styling)
+*React Hot Toast(for notifications)
 
-- There are menu items => Brand Name, Home, statistic, dashboard, and shopping card, favorite icon with react icon
+### React Concepts Used
 
-* Active Route show in the Navbar
+- JSX - Writing component-based UI.
+- React Hooks - useState, useEffect for state management.
+- React Router - Client-side routing.
+- React Context API - Managing global state.
+- React Helmet - Setting dynamic page titles.
 
-### Home page
+### Data Handing & Management
 
-- Banner Section: According to Figma, a nice attractive Banner will appear on the Home page. The banner have a button that takes the user to the Dashboard page.
+- Local Storage: Used for storing cart and wishlist items.
+- React Context API: (Optional, if used) for global state management.
+
+### Features
+
+- Smart Cart Management - Prevents adding items beyond $3000
+- Wishlist with "Move to Cart" Adds items from wishlist to cart.
+- Dynamic Page Titles -Uses React Helmet for better SEO.
+- Toast Notifications - Provides feedback on cart/wishlist actions.
+- Fully Responsive UI - Optimized for all screen sizes.
